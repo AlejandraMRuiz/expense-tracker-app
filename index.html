@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="style.css">
+  <title>Expense Report</title>
+</head>
+
+<body>
+  <div id="grid-container">
+    <!-- Navbar -->
+    <nav id="navbar-container">
+      <h1 class="logo">ExpenseReport</h1>
+      <ul class="nav-list">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Dark view</a></li>
+        <li><a href="#">Soft view</a></li>
+      </ul>
+    </nav>
+    <!-- Create Container Form -->
+    <section id="create-container">
+      <h1>Create New Expense</h1>
+      <form class="expense-form">
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" value="2020-03-01" required>
+
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="Professional">Professional</option>
+          <option value="Travel">Travel</option>
+          <option value="Bills">Bills</option>
+          <option value="Family">Family</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label name="description">Description </label>
+        <textarea placeholder="Details of event" rows="6" cols="50"
+          id="description" required>I want to be the worlds best player and maybe second best it's ok</textarea>
+
+        <label for="amount">Amount</label>
+        <input placeholder="How much" value="200" type="number" id="amount" required>
+
+        <label for="currency">Currency</label>
+        <select id="currency" name="currency" required>
+          <option value="dollar">Dollar</option>
+          <option value="pound">Pound</option>
+          <option value="shekel">Shekel</option>
+          <option value="bitcoin">Bitcoin</option>
+          <option value="other">Other</option>
+        </select>
+
+        <input type="submit" value="Submit" class="btn submit-expense">
+
+      </form>
+    </section>
+
+    <!-- The Expense Report -->
+    <main id="expense-container">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="expense-list"></tbody>
+      </table>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p>All rights reserved to Amitay Soffer</p>
+    </footer>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.5;
+  background: #ddd;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: #333
+}
+
+ul {
+  list-style: none;
+}
+
+#grid-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr 10fr 1fr;
+  height: 100vh;
+}
+
+/* Navbar */
+nav#navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  background: #333;
+  color: #fff;
+}
+
+nav .logo {
+  font-weight: 300;
+}
+
+nav .nav-list {
+  display: flex;
+  list-style: none;
+  justify-content: flex-end;
+}
+
+nav ul > li {
+  cursor: pointer;
+}
+
+nav ul li > a {
+  padding: 10px 0;
+  margin: 0 30px;
+  color: #fff;
+  
+}
+
+nav a:hover {
+  border-bottom: 2px solid #28a745;
+}
+
+
+#navbar-container {
+  border: 1px solid #333;
+  grid-column: 1/3;
+}
+
+/* Create Expense Form */
+#create-container {
+  border-right: 1px solid #333;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+#create-container input[type=text], input[type=date], input[type=number], select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#create-container input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#create-container input[type=submit]:hover {
+  background-color: #28a745;
+}
+
+/* Main Expense Report */
+#expense-container {
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  border-bottom: 1px solid #f8f8f8;
+  font-size: 18px;
+}
+
+tr:nth-child(even) {
+  background: lightgrey;
+}
+
+tr:hover {
+  background-color:#F5F7FA;
+}
+
+td, th {
+  padding: 1rem;
+  text-align: center;
+}
+
+#delete-expense {
+  cursor: pointer;
+}
+
+#done-checkbox {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+
+}
+
+
+
+
+/* Footer */
+#footer {
+  border: 2px solid #000;
+  grid-column: 1/3;
+  display: flex;
+  align-items: center;
+}
+
+#footer p{
+  margin: 0 auto;
+}
