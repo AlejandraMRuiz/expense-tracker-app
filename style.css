@@ -104,7 +104,7 @@ nav a:hover {
 
 /* Main Expense Report */
 #expense-container {
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 table {
@@ -134,15 +134,12 @@ td, th {
   cursor: pointer;
 }
 
-#done-checkbox {
+.done-checkbox {
   cursor: pointer;
   width: 20px;
   height: 20px;
 
 }
-
-
-
 
 /* Footer */
 #footer {

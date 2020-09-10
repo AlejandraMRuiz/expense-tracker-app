@@ -6,103 +6,130 @@ const amount = document.getElementById('amount');
 const currency = document.getElementById('currency');
 
 class Expense {
-  constructor(date, category, description, amount, currency) {
-    this.date = date,
-      this.category = category,
-      this.description = description,
-      this.amount = amount,
-      this.currency = currency
+  constructor(date, category, description, amount, currency, id) {
+    this.date = date;
+    this.category = category;
+    this.description = description;
+    this.amount = amount;
+    this.currency = currency;
+    this.id = id;
   }
 }
 
 class UI {
-  renderExpense(expense, currencySymbol) {
+  renderExpense(expense) {
+    console.log(expense);
 
     const tr = document.createElement('tr');
-
-
     tr.innerHTML = `
-        <td><input id="done-checkbox" type="checkbox"></td>
+        <td><input id="done-checkbox" class="done-checkbox" type="checkbox"></td>
         <td>${expense.date}</td>
         <td>${expense.category}</td>
         <td>${expense.description}</td>
         <td>${expense.amount}</td>
-        <td><i class="${currencySymbol}"></td>
+        <td><i class="${this.verifyCurrencySymbol(expense)}"></td>
         <td><a id="delete-expense"><i class="fas fa-trash"></i></a>
       `
     document.getElementById('expense-list').appendChild(tr);
   }
+  verifyCurrencySymbol(expense) {
+    let currencySymbol = expense.currency;
+
+    currencySymbol = currencySymbol === 'dollar' ? 'fas fa-dollar-sign'
+      : currencySymbol === 'pound' ? 'fas fa-pound-sign'
+        : currencySymbol === 'shekel' ? 'fas fa-shekel-sign'
+          : currencySymbol === 'bitcoin' ? 'fab fa-bitcoin'
+            : 'fas fa-question';
+
+    return currencySymbol;
+  }
   clearFields() {
     // date.value = ''
     // category.value = ''
-    description.value = ''
-    amount.value = ''
+    // description.value = ''
+    amount.value++
     // currency.value = ''
   }
 }
 
-// Add new expense event listener
+class StoreLS {
+  static getExpenseListFromLS() {
+    let expenseList = !JSON.parse(localStorage.getItem('expense-list')) ? []
+      : JSON.parse(localStorage.getItem('expense-list'));
+
+    return expenseList;
+  }
+  static addExpenseToLS(expense) {
+
+    let expenseList = this.getExpenseListFromLS();
+
+    expenseList.push(expense);
+
+    localStorage.setItem('expense-list', JSON.stringify(expenseList));
+
+  }
+  static renderLS() {
+    let expenseList = this.getExpenseListFromLS();
+
+    expenseList.forEach(expense => {
+      const newUI = new UI()
+      newUI.renderExpense(expense);
+    });
+  }
+  static deleteLS(id) {
+
+    let expenseList = this.getExpenseListFromLS();
+
+    expenseList.filter(function (expense, index) {
+
+      // console.log(id)
+      // console.log(expenseList);
+      // // console.log(index)
+
+    })
+
+    // questions.splice(index, 1);
+    // localStorage.setItem('questions', JSON.stringify(questions));
+  }
+}
+
+// Render LS expense-list on page load
+window.addEventListener('DOMContentLoaded', (e) => {
+  StoreLS.renderLS();
+});
+
+let id = 0
+// Add new expense 
 document.querySelector('form').addEventListener('submit', function (e) {
-  // Initiate Expense
-  const newExpense = new Expense(date.value, category.value, description.value, amount.value, currency.value);
+  const newExpense = new Expense(date.value, category.value, description.value, amount.value, currency.value, id);
 
-  
-  let currencySymbol = currency.value;
-
-   currencySymbol = currencySymbol === 'dollar' ? 'fas fa-dollar-sign'
-  : currencySymbol === 'pound' ? 'fas fa-pound-sign'
-  : currencySymbol === 'shekel' ? 'fas fa-shekel-sign'
-  : currencySymbol === 'bitcoin' ? 'fab fa-bitcoin'
-  : 'fas fa-question';
-
-  // Initiate UI
   const ui = new UI();
-
-  ui.renderExpense(newExpense, currencySymbol)
+  ui.renderExpense(newExpense)
 
   ui.clearFields()
+
+  StoreLS.addExpenseToLS(newExpense);
 
   e.preventDefault();
 })
 
-// Delete expense event listener
+// Delete expense 
 document.body.addEventListener('click', function (e) {
   if (e.target.parentElement.id === 'delete-expense') {
+    StoreLS.deleteLS(e.target.parentElement.parentElement.parentElement.firstElementChild.id);
     e.target.parentElement.parentElement.parentElement.remove();
   }
 })
 
-
-// document.body.addEventListener('click', function (e) {
-//   if (e.target.parentElement.id === 'done-checkbox') {
-//     // e.target.parentElement.parentElement.parentElement.remove();
-//     // -webkit-text-decoration-line: line-through; /* Safari */
-//     // text-decoration-line: line-through; 
-//     console.log('hey')
-//     e.target.parentElement.parentElement.parentElement.style.textDecoration = 'line-through';
-//   }
-// })
-
-
-
-
-// class Person {
-//   constructor(name, last, age) {
-//     this.last,
-//       this.name = name,
-//       this.age = age
-//   }
-//   hello(x) {
-//     console.log('what is up ' + this.age + ' ' + x);
-//   }
-//   static greeting(y) {
-//     console.log('I am greeting ' + y + ' ')
-//   }
-// }
-
-// const amitay = new Person('amitay', 'last', 32)
-
-// amitay.hello('soffer')
-
-// Person.greeting('Marion');
-
+// Checkbox strikethrough expense
+document.body.addEventListener('change', function (e) {
+  if (e.target.id === 'done-checkbox') {
+    if (e.target.checked) {
+      e.target.parentElement.parentElement.children[6].firstElementChild.style.color = 'red';
+      e.target.parentElement.parentElement.style.textDecoration = 'line-through';
+    } else {
+      e.target.parentElement.parentElement.style.textDecoration = 'none';
+      e.target.parentElement.parentElement.children[6].firstElementChild.style.color = 'initial';
+    }
+  }
+});
