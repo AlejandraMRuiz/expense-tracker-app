@@ -18,8 +18,6 @@ class Expense {
 
 class UI {
   renderExpense(expense) {
-    console.log(expense);
-
     const tr = document.createElement('tr');
     tr.innerHTML = `
         <td><input id="done-checkbox" class="done-checkbox" type="checkbox"></td>
@@ -30,6 +28,8 @@ class UI {
         <td><i class="${this.verifyCurrencySymbol(expense)}"></td>
         <td><a id="delete-expense"><i class="fas fa-trash"></i></a>
       `
+    tr.id = expense.id;
+
     document.getElementById('expense-list').appendChild(tr);
   }
   verifyCurrencySymbol(expense) {
@@ -44,11 +44,9 @@ class UI {
     return currencySymbol;
   }
   clearFields() {
-    // date.value = ''
-    // category.value = ''
-    // description.value = ''
-    amount.value++
-    // currency.value = ''
+    date.value = ''
+    description.value = ''
+    amount.value = ''
   }
 }
 
@@ -60,13 +58,11 @@ class StoreLS {
     return expenseList;
   }
   static addExpenseToLS(expense) {
-
     let expenseList = this.getExpenseListFromLS();
 
     expenseList.push(expense);
 
     localStorage.setItem('expense-list', JSON.stringify(expenseList));
-
   }
   static renderLS() {
     let expenseList = this.getExpenseListFromLS();
@@ -76,50 +72,50 @@ class StoreLS {
       newUI.renderExpense(expense);
     });
   }
-  static deleteLS(id) {
-
+  static deleteItemFromLS(id) {
     let expenseList = this.getExpenseListFromLS();
-
     expenseList.filter(function (expense, index) {
-
-      // console.log(id)
-      // console.log(expenseList);
-      // // console.log(index)
-
-    })
-
-    // questions.splice(index, 1);
-    // localStorage.setItem('questions', JSON.stringify(questions));
+      if (id == expense.id) {
+        expenseList.splice(index, 1);
+      }
+    });
+    localStorage.setItem('expense-list', JSON.stringify(expenseList));
   }
 }
 
-// Render LS expense-list on page load
+// Render local storage on page load
 window.addEventListener('DOMContentLoaded', (e) => {
   StoreLS.renderLS();
 });
 
-let id = 0
-// Add new expense 
+// Submit new expense
 document.querySelector('form').addEventListener('submit', function (e) {
-  const newExpense = new Expense(date.value, category.value, description.value, amount.value, currency.value, id);
+  const newExpense = new Expense(date.value, category.value, description.value, amount.value, currency.value, Math.random());
 
   const ui = new UI();
   ui.renderExpense(newExpense)
-
   ui.clearFields()
-
   StoreLS.addExpenseToLS(newExpense);
 
   e.preventDefault();
 })
 
-// Delete expense 
+// Delete a single expense 
 document.body.addEventListener('click', function (e) {
   if (e.target.parentElement.id === 'delete-expense') {
-    StoreLS.deleteLS(e.target.parentElement.parentElement.parentElement.firstElementChild.id);
+    StoreLS.deleteItemFromLS(e.target.parentElement.parentElement.parentElement.id);
     e.target.parentElement.parentElement.parentElement.remove();
   }
 })
+
+// Delete all expense list
+document.getElementById('delete-all').addEventListener('click', function () {
+  let cofirmMsg = confirm('You are about to delete all expenses. Are you sure?')
+  if (cofirmMsg === true) {
+    document.getElementById('expense-list').textContent = ''
+    localStorage.clear();
+  }
+});
 
 // Checkbox strikethrough expense
 document.body.addEventListener('change', function (e) {
