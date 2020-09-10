@@ -44,9 +44,12 @@ class UI {
     return currencySymbol;
   }
   clearFields() {
-    date.value = ''
     description.value = ''
     amount.value = ''
+  }
+  setDateForToday() {
+    let today = new Date().toISOString().substr(0, 10);
+    document.getElementById('date').value = today;
   }
 }
 
@@ -68,8 +71,8 @@ class StoreLS {
     let expenseList = this.getExpenseListFromLS();
 
     expenseList.forEach(expense => {
-      const newUI = new UI()
-      newUI.renderExpense(expense);
+      const ui = new UI();
+      ui.renderExpense(expense);
     });
   }
   static deleteItemFromLS(id) {
@@ -83,8 +86,11 @@ class StoreLS {
   }
 }
 
-// Render local storage on page load
+// Render local storage and today's date on page load
 window.addEventListener('DOMContentLoaded', (e) => {
+  const ui = new UI();
+  ui.setDateForToday()
+
   StoreLS.renderLS();
 });
 
@@ -93,6 +99,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
   const newExpense = new Expense(date.value, category.value, description.value, amount.value, currency.value, Math.random());
 
   const ui = new UI();
+  ui.setDateForToday();
   ui.renderExpense(newExpense)
   ui.clearFields()
   StoreLS.addExpenseToLS(newExpense);
