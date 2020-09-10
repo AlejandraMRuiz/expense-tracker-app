@@ -128,11 +128,11 @@ document.getElementById('delete-all').addEventListener('click', function () {
 document.body.addEventListener('change', function (e) {
   if (e.target.id === 'done-checkbox') {
     if (e.target.checked) {
-      e.target.parentElement.parentElement.children[6].firstElementChild.style.color = 'red';
+      e.target.parentElement.parentElement.children[6].firstElementChild.style.cssText = 'color: red; font-size: 22px';
       e.target.parentElement.parentElement.style.textDecoration = 'line-through';
     } else {
       e.target.parentElement.parentElement.style.textDecoration = 'none';
-      e.target.parentElement.parentElement.children[6].firstElementChild.style.color = 'initial';
+      e.target.parentElement.parentElement.children[6].firstElementChild.style.cssText = 'color: initial; font-size: initial';
     }
   }
 });
