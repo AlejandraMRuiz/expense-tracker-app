@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
   <link rel="stylesheet" href="style.css">
   <title>Expense Report</title>
 </head>
-
 <body>
   <div id="grid-container">
     <!-- Navbar -->
@@ -24,10 +22,8 @@
     <section id="create-container">
       <h1>Create New Expense</h1>
       <form class="expense-form">
-
         <label for="date">Date:</label>
         <input type="date" id="date" required>
-
         <label for="category">Category</label>
         <select id="category" name="category" required>
           <option value="Professional">Professional</option>
@@ -36,14 +32,11 @@
           <option value="Family">Family</option>
           <option value="Other">Other</option>
         </select>
-
         <label name="description">Description </label>
         <textarea placeholder="Details of event" rows="6" cols="50" id="description"
-          required>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, totam.</textarea>
-
+          required></textarea>
         <label for="amount">Amount</label>
-        <input placeholder="How much" value="1" type="number" id="amount" required>
-
+        <input placeholder="How much" type="number" id="amount" required>
         <label for="currency">Currency</label>
         <select id="currency" name="currency" required>
           <option value="dollar">Dollar</option>
