@@ -11,6 +11,6 @@ Click [HERE](https://amitaysoffer.github.io/expense-tracker-app/) to let the fun
 TBC
 
 ## Author
-Amitay Soffer - Front End Developer - [Website](https://www.esncz.org/sites/default/files/imce/under-construction.jpg) |  [LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
+Amitay Soffer - Full Stack Developer - [Website](https://www.esncz.org/sites/default/files/imce/under-construction.jpg) |  [LinkedIn](https://www.linkedin.com/in/amitay-soffer-137304151/)
 
 
