@@ -29,7 +29,6 @@ class UI {
         <td><a class="delete-expense"><i class="fas fa-trash"></i></a>
       `
     tr.id = expense.id;
-
     document.getElementById('expense-list').appendChild(tr);
   }
   verifyCurrencySymbol(expense) {
