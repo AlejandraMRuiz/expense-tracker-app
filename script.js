@@ -26,7 +26,7 @@ class UI {
         <td>${expense.description}</td>
         <td>${expense.amount}</td>
         <td><i class="${this.verifyCurrencySymbol(expense)}"></td>
-        <td><a id="delete-expense"><i class="fas fa-trash"></i></a>
+        <td><a class="delete-expense"><i class="fas fa-trash"></i></a>
       `
     tr.id = expense.id;
 
@@ -34,13 +34,22 @@ class UI {
   }
   verifyCurrencySymbol(expense) {
     let currencySymbol = expense.currency;
-
-    currencySymbol = currencySymbol === 'dollar' ? 'fas fa-dollar-sign'
-      : currencySymbol === 'pound' ? 'fas fa-pound-sign'
-        : currencySymbol === 'shekel' ? 'fas fa-shekel-sign'
-          : currencySymbol === 'bitcoin' ? 'fab fa-bitcoin'
-            : 'fas fa-question';
-
+    switch (currencySymbol) {
+      case 'dollar':
+        currencySymbol = 'fas fa-dollar-sign';
+        break;
+      case 'pound':
+        currencySymbol = 'fas fa-pound-sign';
+        break;
+      case 'shekel':
+        currencySymbol = 'fas fa-shekel-sign';
+        break;
+      case 'bitcoin':
+        currencySymbol = 'fab fa-bitcoin';
+        break;
+      default:
+        currencySymbol = 'fas fa-question';
+    }
     return currencySymbol;
   }
   clearFields() {
@@ -109,7 +118,8 @@ document.querySelector('form').addEventListener('submit', function (e) {
 
 // Delete a single expense 
 document.body.addEventListener('click', function (e) {
-  if (e.target.parentElement.id === 'delete-expense') {
+  debugger;
+  if (e.target.parentElement.classList[0] === 'delete-expense') {
     StoreLS.deleteItemFromLS(e.target.parentElement.parentElement.parentElement.id);
     e.target.parentElement.parentElement.parentElement.remove();
   }
@@ -126,13 +136,13 @@ document.getElementById('delete-all').addEventListener('click', function () {
 
 // Checkbox strikethrough expense
 document.body.addEventListener('change', function (e) {
-  if (e.target.id === 'done-checkbox') {
+  if (e.target.type === 'checkbox') {
     if (e.target.checked) {
-      e.target.parentElement.parentElement.children[6].firstElementChild.style.cssText = 'color: red; font-size: 22px';
-      e.target.parentElement.parentElement.style.textDecoration = 'line-through';
+      e.target.parentElement.parentElement.children[6].firstElementChild.classList.add('red-trash')
+      e.target.parentElement.parentElement.classList.add('strike')
     } else {
-      e.target.parentElement.parentElement.style.textDecoration = 'none';
-      e.target.parentElement.parentElement.children[6].firstElementChild.style.cssText = 'color: initial; font-size: initial';
+      e.target.parentElement.parentElement.children[6].firstElementChild.classList.remove('red-trash');
+      e.target.parentElement.parentElement.classList.remove('strike')
     }
   }
 });
